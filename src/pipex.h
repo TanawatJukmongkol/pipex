@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 21:41:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/02/23 08:03:34 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/02/23 13:30:25 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_process
 
 typedef struct s_global
 {
-	t_process	*proc;
+	t_process	proc;
 	size_t		nproc;
 	char		*out;
 	int			pout;
