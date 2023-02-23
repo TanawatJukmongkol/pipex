@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:00:52 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/02/23 07:41:24 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/02/23 08:58:10 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 
 void	init_precess(t_global *g)
 {
-	g->nproc = 0;
 	g->proc = malloc(sizeof(t_process));
+	g->nproc = 0;
 }
 
 int	end_process(t_global *g, int stat)
 {
 	close(g->proc->pipe[1]);
 	free(g->proc);
+	if (g->out)
+		free(g->out);
+	g->nproc--;
 	exit(stat);
 	return (0);
 }
@@ -52,24 +55,25 @@ void	begin_pipe(t_global *g)
 	{
 		close(g->proc->pipe[0]);
 		dup2(g->proc->pipe[1], 1);
+		close(g->proc->pipe[1]);
 	}
 }
 
 void	end_pipe(t_global *g)
 {
-	char	*std_out;
+	char	*next;
 
 	if (g->proc->pid > 0)
 	{
 		close(g->proc->pipe[1]);
-		std_out = get_next_line(g->proc->pipe[0]);
-		while (std_out) 
+		next = get_next_line(g->proc->pipe[0]);
+		if (!g->out)
+			g->out = NULL;
+		while (next)
 		{
-			ft_putstr_fd(std_out, 1);
-			free(std_out);
-			std_out = get_next_line(g->proc->pipe[0]);
+			ft_recat(&g->out, next);
+			next = get_next_line(g->proc->pipe[0]);
 		}
-		free(std_out);
 		close(g->proc->pipe[0]);
 	}
 }

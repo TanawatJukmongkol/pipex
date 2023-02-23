@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 21:41:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/02/23 07:41:16 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/02/23 08:03:34 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <stdio.h>
 # include <unistd.h>
-# include <sys/resource.h>
+# include <sys/wait.h>
 # include "../lib/libft/libft.h"
 # include "../lib/get_next_line/get_next_line.h"
 
