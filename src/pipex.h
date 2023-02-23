@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 21:41:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/02/23 04:46:21 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/02/23 07:28:25 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <sys/resource.h>
 # include "../lib/libft/libft.h"
+# include "../lib/get_next_line/get_next_line.h"
 
 typedef struct s_process
 {
@@ -37,5 +38,7 @@ typedef struct s_global
 void	init_precess(t_global *g);
 int		end_process(t_global *g, int stat);
 int		spawn_child(t_global *g, char *cmd, char *arg);
+void	begin_pipe(t_global *g);
+void	end_pipe(t_global *g, char **nl);
 
 #endif

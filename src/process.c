@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:00:52 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/02/23 04:45:24 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/02/23 07:28:43 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,21 @@ int	spawn_child(t_global *g, char *cmd, char *arg)
 	return (1);
 }
 
-void	write_pipe(t_global *g)
+void	begin_pipe(t_global *g)
 {
 	if (g->proc->pid == 0)
 	{
 		close(g->proc->pipe[0]);
-		dup2(g->proc->pipe[1], 0);
-		close(g->proc->pipe[1]);
+		dup2(g->proc->pipe[1], 1);
 	}
 }
 
-void	read_pipe(t_global *g)
+void	end_pipe(t_global *g, char **nl)
 {
 	if (g->proc->pid > 0)
 	{
-		dup2(g->proc->pipe[1], 1);
-		close(g->proc->pipe[0]);
 		close(g->proc->pipe[1]);
+		*nl = get_next_line(g->proc->pipe[0]);
+		close(g->proc->pipe[0]);
 	}
 }
