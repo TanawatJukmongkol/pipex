@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 21:41:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/02/23 13:30:25 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/02/25 12:19:57 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 # include <stdio.h>
 # include <unistd.h>
+# include <sys/types.h>
 # include <sys/wait.h>
+# include <fcntl.h>
 # include "../lib/libft/libft.h"
 # include "../lib/get_next_line/get_next_line.h"
 
@@ -23,22 +25,23 @@ typedef struct s_process
 {
 	pid_t	pid;
 	int		pipe[2];
-	char	*cmd;
+	size_t	indx;
 }				t_process;
 
 typedef struct s_global
 {
+	// processes
 	t_process	proc;
 	size_t		nproc;
-	char		*out;
-	int			pout;
+	// std out
+	int			*main_pipe;
 }				t_global;
 
 // Processes utility
 void	init_precess(t_global *g);
-int		end_process(t_global *g, int stat);
-int		spawn_child(t_global *g, char *cmd, char *arg);
-void	begin_pipe(t_global *g);
-void	end_pipe(t_global *g);
+void	close_proc(t_global *g, ssize_t indx, int status);
+void	exit_fail(t_global *g, char *msg);
+void	spawn_child(t_global *g);
+void	assign_task(t_global *g, ssize_t indx, void task(t_global *g));
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:00:52 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/02/23 13:34:36 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/02/25 04:53:44 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,65 +15,41 @@
 void	init_precess(t_global *g)
 {
 	g->nproc = 0;
-	g->out = NULL;
 	g->proc.pid = 0;
 }
 
-int	end_process(t_global *g, int stat)
+void	close_proc(t_global *g, ssize_t indx, int status)
 {
-	close(g->proc.pipe[1]);
-	if (g->out)
-		free(g->out);
 	g->nproc--;
-	exit(stat);
-	return (0);
+	if (g->nproc == indx || indx < 0)
+		exit(status);
 }
 
-void	exit_err(t_global *g, char	*msg)
+void	exit_fail(t_global *g, char *msg)
 {
 	ft_putstr_fd(msg, 2);
-	end_process(g, 1);
+	close_proc(g, -1, 1);
 }
 
-int	spawn_child(t_global *g, char *cmd, char *arg)
+void	spawn_child(t_global *g)
 {
 	if (!g->proc.pid)
 	{
 		if (pipe(g->proc.pipe) < 0)
-			return (-1);
+			exit_fail(g, "failed to pipe");
 		g->proc.pid = fork();
 		if (g->proc.pid < 0)
-			return (-1);
+			exit_fail(g, "failed to fork");
+		g->nproc++;
+		if (g->proc.pid == 0)
+			g->proc.indx = g->nproc;
 	}
-	g->nproc++;
-	return (1);
+	else
+		g->nproc++;
 }
 
-void	begin_pipe(t_global *g)
+void	assign_task(t_global *g, ssize_t indx, void task(t_global *g))
 {
-	if (g->proc.pid == 0)
-	{
-		close(g->proc.pipe[0]);
-		dup2(g->proc.pipe[1], 1);
-		close(g->proc.pipe[1]);
-	}
-}
-
-void	end_pipe(t_global *g)
-{
-	char	*next;
-
-	if (g->proc.pid > 0)
-	{
-		close(g->proc.pipe[1]);
-		next = get_next_line(g->proc.pipe[0]);
-		if (!g->out)
-			g->out = NULL;
-		while (next)
-		{
-			ft_recat(&g->out, next);
-			next = get_next_line(g->proc.pipe[0]);
-		}
-		close(g->proc.pipe[0]);
-	}
+	if (g->proc.indx == indx || indx == -1)
+		task(g);
 }
