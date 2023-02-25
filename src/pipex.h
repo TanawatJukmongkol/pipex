@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 21:41:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/02/25 12:19:57 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/02/25 18:58:52 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define PIPEX_H
 
 # include <stdio.h>
+# include <stdlib.h>
 # include <unistd.h>
-# include <sys/types.h>
 # include <sys/wait.h>
 # include <fcntl.h>
 # include "../lib/libft/libft.h"
