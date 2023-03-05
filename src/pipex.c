@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 21:42:33 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/02/25 19:02:21 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/03/06 00:10:39 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	open_file(char *path, int mode)
 			ft_putstr_fd("pipex: ", 2);
 			ft_putstr_fd(path, 2);
 			ft_putstr_fd(": No such file or directory\n", 2);
-			return (1);
+			return (-1);
 		}
 		return (open(path, O_RDONLY));
 	}
@@ -30,57 +30,46 @@ int	open_file(char *path, int mode)
 				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH));
 }
 
-void	exec_task(t_global *g)
-{
-	dup2(g->proc.pipe[0], 0);
-	close(g->proc.pipe[0]);
-	dup2(g->proc.pipe[1], 1);
-	close(g->proc.pipe[1]);
-	execve("/bin/ls", (char *[]){"ls", NULL}, (char *[]){NULL});
-}
-
-void	exec_task2(t_global *g)
-{
-	// close(g->proc.pipe[1]);
-	dup2(g->proc.pipe[0], 0);
-	close(g->proc.pipe[0]);
-	dup2(g->proc.pipe[1], 1);
-	close(g->proc.pipe[1]);
-	execve("/bin/cat", (char *[]){"cat", "-e", NULL}, (char *[]){NULL});
-}
-
-void	exec_task3(t_global *g)
-{
-	// close(g->proc.pipe[1]);
-	// dup2(g->proc.pipe[0], 0);
-	// close(g->proc.pipe[0]);
-	// // dup2(g->proc.pipe[1], 1);
-	// execve("/bin/grep", (char *[]){"grep", "dSYM", NULL}, (char *[]){NULL});
-	// close(g->proc.pipe[1]);
-}
-
 int	main(int argc, char **argv)
 {
 	t_global	g;
 
-	init_precess(&g);
+	// init_precess(&g);
+	int exit_status;
+	int p[2];
+	pipe(p);
+	int pid = fork();
 
-	spawn_child(&g);
-	// if (g.proc.indx == 0)
-	// 	g.main_pipe = g.proc.pipe;
-	spawn_child(&g);
+	if (pid == 0)
+	{
+		int file = open_file("infile", 1);
+		dup2(p[1], 1);
+		close(p[0]);
+		dup2(file, 0);
+		close(file);
+		execve (
+			"/bin/sleep",
+			(char *[]){"sleep", "5", NULL},
+			(char *[]){NULL}
+		);
+	}
+	else
+	{
+		dup2(p[0], 0);
+		close(p[1]);
+		execve (
+			"/bin/sleep",
+			(char *[]){"sleep", "3", NULL},
+			(char *[]){NULL}
+		);
+	}
 
-	assign_task(&g, 2, exec_task);
-	assign_task(&g, 1, exec_task2);
+	int out = open_file("outfile", 0);
+	dup2(out, 1);
 
-	close_proc(&g, 2, 0);
-	close_proc(&g, 1, 0);
+	waitpid(pid, &exit_status, 0);
 
-	// char *str = get_next_line(g.main_pipe[0]);
-	// printf("%s\n", str);
-	// free(str);
-
-	wait(NULL);
-	close_proc(&g, -1, 0);
+	// wait(NULL);
+	// close_proc(&g, -1, 0);
 	return (0);
 }
