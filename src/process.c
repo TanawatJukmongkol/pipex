@@ -6,16 +6,19 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:00:52 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/02/25 04:53:44 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/03/04 01:29:46 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	init_precess(t_global *g)
+void	init_precess(t_global *g, int argc, char **argv)
 {
 	g->nproc = 0;
 	g->proc.pid = 0;
+	g->proc.status = 0;
+	g->argc = argc;
+	g->argv = argv;
 }
 
 void	close_proc(t_global *g, ssize_t indx, int status)
