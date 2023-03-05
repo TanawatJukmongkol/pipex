@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:00:52 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/03/04 01:29:46 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/03/06 03:41:22 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	init_precess(t_global *g, int argc, char **argv)
 {
 	g->nproc = 0;
+	g->proc.indx = 0;
 	g->proc.pid = 0;
-	g->proc.status = 0;
 	g->argc = argc;
 	g->argv = argv;
 }
@@ -51,8 +51,9 @@ void	spawn_child(t_global *g)
 		g->nproc++;
 }
 
-void	assign_task(t_global *g, ssize_t indx, void task(t_global *g))
+int	assign_task(t_global *g, ssize_t indx, int task(t_global *g))
 {
 	if (g->proc.indx == indx || indx == -1)
-		task(g);
+		return (task(g));
+	return (0);
 }

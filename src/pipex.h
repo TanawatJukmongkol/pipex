@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 21:41:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/03/04 01:30:02 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/03/06 03:28:14 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef struct s_process
 	pid_t	pid;
 	int		pipe[2];
 	size_t	indx;
-	int		status;
 }				t_process;
 
 typedef struct s_global
@@ -37,6 +36,7 @@ typedef struct s_global
 	// processes
 	t_process	proc;
 	size_t		nproc;
+	int			status;
 }				t_global;
 
 // Processes utility
@@ -44,6 +44,6 @@ void	init_precess(t_global *g, int argc, char **argv);
 void	close_proc(t_global *g, ssize_t indx, int status);
 void	exit_fail(t_global *g, char *msg);
 void	spawn_child(t_global *g);
-void	assign_task(t_global *g, ssize_t indx, void task(t_global *g));
+int		assign_task(t_global *g, ssize_t indx, int task(t_global *g));
 
 #endif
