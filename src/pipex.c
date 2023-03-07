@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 21:42:33 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/03/07 07:28:13 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/03/07 07:35:41 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,13 @@ int	main(int argc, char **argv)
 		file = open_file("infile", P_READ);
 		if (file < 0)
 			exit(1);
-		dup2(p[1], 1);
 		close(p[0]);
+		dup2(p[1], 1);
+		close(p[1]);
 		dup2(file, 0);
 		close(file);
 		exec(
-			(char *[]){"sleep", "5", NULL},
+			(char *[]){"lss", NULL},
 			(char *[]){NULL});
 	}
 	else if (f > 0 && f2 == 0)
@@ -95,12 +96,13 @@ int	main(int argc, char **argv)
 		out = open_file("outfile", P_WRITE);
 		if (out < 0)
 			exit(1);
-		dup2(p[0], 0);
 		close(p[1]);
+		dup2(p[0], 0);
+		close(p[0]);
 		dup2(out, 1);
 		close(out);
 		exec(
-			(char *[]){"sleep", "3", NULL},
+			(char *[]){"sleep 5", NULL},
 			(char *[]){NULL});
 	}
 	else
