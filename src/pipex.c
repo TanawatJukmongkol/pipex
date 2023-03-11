@@ -6,112 +6,78 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 21:42:33 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/03/07 07:35:41 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/03/11 18:56:00 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-/*
-int	redirr_in_exec(t_global *g)
-{
-	int	file;
 
-	dup2(g->proc.pipe[1], 1);
-	close(g->proc.pipe[0]);
-	file = open_file("infile", 1);
-	if (file < 0)
-		return (1);
-	dup2(file, 0);
-	close(file);
-	if (execve (
-			"/bin/sleep",
-			(char *[]){"sleep", "5", NULL},
-		(char *[]){NULL}) < 0)
-		return (1);
-	return (0);
+void	redirect_infile(t_global *g)
+{
+	printf("< infile cmd%lu | ", g->proc.indx);
+	// execve(
+	// 	"/bin/sleep",
+	// 	(char *[]){"sleep", "2", NULL},
+	// 	(char *[]){NULL});
 }
 
-int	redirr_out_exec(t_global *g)
+void	pipe_and_execute(t_global *g)
 {
-	int	out;
+	printf("cmd%lu | ", g->proc.indx);
+	// execve(
+	// 	"/bin/sleep",
+	// 	(char *[]){"sleep", "5", NULL},
+	// 	(char *[]){NULL});
+}
 
-	dup2(g->proc.pipe[0], 0);
-	close(g->proc.pipe[1]);
-	out = open_file("outfile", 0);
-	dup2(out, 1);
-	if (execve (
-			"/bin/sleep",
-			(char *[]){"sleep", "2", NULL},
-		(char *[]){NULL}) < 0)
+void	redirect_outfile(t_global *g)
+{
+	printf("cmd%lu > outfile ", g->proc.indx);
+	// execve(
+	// 	"/bin/sleep",
+	// 	(char *[]){"sleep", "5", NULL},
+	// 	(char *[]){NULL});
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_global	g;
+	size_t		indx;
+	int			exit_stat;
+
+	if (argc < 5)
 		return (1);
-	return (0);
-}
-*/
-
-void	exec(char **cmd, char **env)
-{
-	char	*path;
-
-	path = ft_strjoin("/bin/", cmd[0]);
-	if (open_file(path, P_EXE) < 0)
+	indx = 0;
+	init_global(&g, argc, argv, envp);
+	while (indx < argc - 3)
 	{
-		free(path);
-		exit(1);
+		spawn_child(&g);
+		indx++;
 	}
-	execve(path, cmd, env);
-	free(path);
-	perror("\033[91mPipeX:\033[0m ");
-}
+	indx = 1;
+	assign_task(&g, indx, redirect_infile);
+	while (++indx < argc - 3)
+		assign_task(&g, indx, pipe_and_execute);
+	assign_task(&g, indx, redirect_outfile);
 
-int	main(int argc, char **argv)
-{
-	int		exit_statatus;
-	int		file;
-	int		out;
-	int		p[2];
-	pid_t	f;
-	pid_t	f2;
+	// printf("%lu:%d\n", g.proc.indx, g.proc.pid);
 
-	pipe(p);
-	f = fork();
-	f2 = 0;
-	if (f > 0)
-		f2 = fork();
-	if (f == 0 && f2 == 0)
+	indx = 0;
+	while (indx < g.argc - 3)
 	{
-		file = open_file("infile", P_READ);
-		if (file < 0)
-			exit(1);
-		close(p[0]);
-		dup2(p[1], 1);
-		close(p[1]);
-		dup2(file, 0);
-		close(file);
-		exec(
-			(char *[]){"lss", NULL},
-			(char *[]){NULL});
+		waitpid(g.pids[indx], &exit_stat, 0);
+		indx++;
 	}
-	else if (f > 0 && f2 == 0)
-	{
-		out = open_file("outfile", P_WRITE);
-		if (out < 0)
-			exit(1);
-		close(p[1]);
-		dup2(p[0], 0);
-		close(p[0]);
-		dup2(out, 1);
-		close(out);
-		exec(
-			(char *[]){"sleep 5", NULL},
-			(char *[]){NULL});
-	}
-	else
-	{
-		close(p[0]);
-		close(p[1]);
-	}
-	waitpid(f, &exit_statatus, 0);
-	waitpid(f2, &exit_statatus, 0);
 
-	return (0);
+	// waitpid(g.pids[0], &exit_stat, 0);
+	// waitpid(g.pids[1], &exit_stat, 0);
+	// waitpid(0, &exit_stat, 0);
+
+	// printf("%d > ", g.proc.pid);
+	// printf("%d ", g.pids[0]);
+	// printf("%d ", g.pids[1]);
+	// printf("%d\n", g.pids[3]);
+
+	wait(NULL);
+	return (WEXITSTATUS(exit_stat));
 }

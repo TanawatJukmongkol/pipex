@@ -6,12 +6,12 @@
 #    By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/19 06:32:57 by tjukmong          #+#    #+#              #
-#    Updated: 2023/02/22 22:59:48 by tjukmong         ###   ########.fr        #
+#    Updated: 2023/03/08 13:21:58 by tjukmong         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= pipex
-SRCS		= pipex.c process.c
+SRCS		= pipex.c util.c process.c
 
 SRC_DIR		= ./src/
 LIB_DIR		= ./lib/
