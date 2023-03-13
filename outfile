@@ -1,8 +1,12 @@
-build
-infile
-lib
-Makefile
-outfile
-pipex
-pipex.dSYM
-src
+total 32
+drwxr-xr-x 1 arch arch   102 มี.ค.  13 13:07 .
+drwxr-xr-x 1 arch arch   122 มี.ค.   8 09:24 ..
+drwxr-xr-x 1 arch arch    44 มี.ค.  13 13:07 build
+drwxr-xr-x 1 arch arch   204 มี.ค.  13 08:33 .git
+-rw-r--r-- 1 arch arch    25 มี.ค.   7 07:43 infile
+drwxr-xr-x 1 arch arch    54 มี.ค.   6 00:55 lib
+-rw-r--r-- 1 arch arch  2241 มี.ค.  13 04:34 Makefile
+-rw-r--r-- 1 arch arch     0 มี.ค.  13 13:10 outfile
+-rwxr-xr-x 1 arch arch 21424 มี.ค.  13 13:07 pipex
+drwxr-xr-x 1 arch arch    16 ก.พ.  23 13:36 pipex.dSYM
+drwxr-xr-x 1 arch arch    58 มี.ค.  11 20:14 src
