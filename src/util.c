@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 13:21:28 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/03/11 15:57:50 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/03/12 13:28:31 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,11 @@ void	init_global(t_global *g, int argc, char **argv, char **envp)
 	g->proc.indx = 0;
 	g->argc = argc;
 	g->argv = argv;
+	g->envp = envp;
 	while (envp[indx] && ft_memcmp(envp[indx], "PATH=", 5))
 		indx++;
-	g->path = ft_split(envp[indx] + 5, ':');
+	if (envp[indx])
+		g->path = ft_split(envp[indx] + 5, ':');
 	indx = 0;
 	while (g->path[indx])
 	{

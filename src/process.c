@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:00:52 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/03/11 18:49:12 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/03/12 03:31:51 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	spawn_child(t_global *g)
 	else
 		g->nproc++;
 	g->pids[g->nproc - 1] = g->proc.pid;
+	g->pipes[g->nproc - 1][0] = g->proc.pipe[0];
+	g->pipes[g->nproc - 1][1] = g->proc.pipe[1];
 }
 
 void	assign_task(t_global *g, ssize_t indx, void task(t_global *g))

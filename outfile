@@ -1,1 +1,8 @@
-Hello, this is an infile.
+build
+infile
+lib
+Makefile
+outfile
+pipex
+pipex.dSYM
+src

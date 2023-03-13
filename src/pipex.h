@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 21:41:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/03/11 14:53:55 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/03/12 03:31:17 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_global
 	char		**path;
 	t_process	proc;
 	pid_t		pids[FD_MAX];
+	pid_t		pipes[FD_MAX][2];
 	size_t		nproc;
 }				t_global;
 
