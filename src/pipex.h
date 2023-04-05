@@ -25,35 +25,6 @@
 # define P_READ 1
 # define P_WRITE 0
 
-typedef struct s_process
-{
-	pid_t	pid;
-	int		pipe[2];
-	size_t	indx;
-	int		status;
-}				t_process;
-
-typedef struct s_global
-{
-	int			argc;
-	char		**argv;
-	char		**envp;
-	char		**path;
-	t_process	proc;
-	pid_t		pids[FD_MAX];
-	pid_t		pipes[FD_MAX][2];
-	size_t		nproc;
-}				t_global;
-
 //
-void	init_global(t_global *g, int argc, char **argv, char **envp);
-void	free_global(t_global *g);
-void	clear_pipes(t_global *g, size_t indx);
-int		pipex_error(t_global *g, char *msg);
-int		open_file(t_global *g, char *path, int mode);
-
-//
-void	spawn_child(t_global *g);
-void	assign_task(t_global *g, ssize_t indx, void task(t_global *));
 
 #endif
