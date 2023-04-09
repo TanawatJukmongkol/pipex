@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 21:41:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/04/09 09:15:47 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/04/09 09:56:16 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_process
 	int		argc;
 	char	**argv;
 	char	**envp;
-	int		has_heredoc;
+	int		heredoc;
 
 	int		pipe[FD_MAX >> 1][2];
 	pid_t	fork[FD_MAX >> 2];
