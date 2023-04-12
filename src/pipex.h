@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 21:41:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/04/09 09:56:16 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/04/13 05:00:24 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,15 @@ typedef struct s_process
 // Processes
 void	wait_process(t_process *proc);
 void	spawn_process(t_process *proc, void (*fn)(t_process *p));
+void	create_pipes(t_process *proc, size_t npipe);
 pid_t	redirr_fd(char *name, int fd, int mode);
 void	exec(char **cmd, char **envp);
 
 // Utils
 size_t	arr2d_len(void **array);
 void	free_2d_arr(void **array);
-char	*get_path(char **envp, char *cmd);
-void	create_pipes(t_process *proc, size_t npipe);
+char	*get_env(char *env, char **envp);
+char	*get_path(char **env, char *cmd);
 void	close_pipes(t_process *proc, size_t a, size_t b);
 
 #endif

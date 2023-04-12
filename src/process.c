@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:00:52 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/04/07 16:54:33 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/04/13 05:00:36 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,18 @@ void	spawn_process(t_process *proc, void (*fn)(t_process *p))
 	if (proc->fork[proc->nproc] == 0)
 		fn(proc);
 	proc->nproc++;
+}
+
+void	create_pipes(t_process *proc, size_t npipe)
+{
+	size_t	indx;
+
+	indx = 0;
+	while (indx < npipe)
+	{
+		pipe(proc->pipe[indx]);
+		indx++;
+	}
 }
 
 pid_t	redirr_fd(char *name, int fd, int mode)
@@ -63,26 +75,25 @@ void	exec(char **cmd, char **envp)
 {
 	char	*err_msg;
 	char	*path;
-	char	**split;
 
-	// split = ft_split(cmd[0], '/');
-	// path = get_path(envp, split[arr2d_len((void **)split) - 1]);
-	// free_2d_arr((void **)split);
-	path = get_path(envp, cmd[0]);
-	if (path != NULL)
+	err_msg = ft_strjoin("\033[91mPipeX:\033[0m ", cmd[0]);
+	if (access(cmd[0], F_OK) == 0)
+		path = ft_strdup(cmd[0]);
+	else
+		path = get_path(envp, cmd[0]);
+	if (path)
 	{
 		execve(path, cmd, envp);
-		wait(NULL);
-	}
-	err_msg = ft_strjoin("\033[91mPipeX:\033[0m ", cmd[0]);
-	if (path)
 		perror(err_msg);
+		free(path);
+		free(err_msg);
+	}
 	else
 	{
 		ft_putstr_fd(err_msg, 2);
 		ft_putendl_fd(": command not found", 2);
+		free(path);
+		free(err_msg);
+		exit(127);
 	}
-	free(err_msg);
-	free(path);
-	exit(127);
 }
