@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:00:52 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/04/13 05:00:36 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/04/13 17:11:00 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	wait_process(t_process *proc)
 	{
 		waitpid(proc->fork[indx], &proc->exit_stats[indx], 0);
 		proc->exit_stats[indx] = WEXITSTATUS(proc->exit_stats[indx]);
-		// printf("%lu:%d exit stat: %d\n", proc->indx, proc->fork[0], proc->exit_stats[0]);
+		// printf("%lu:%d exit stat: %d\n", proc->indx, proc->fork[indx], proc->exit_stats[indx]);
 		indx++;
 	}
 }
@@ -82,11 +82,13 @@ void	exec(char **cmd, char **envp)
 	else
 		path = get_path(envp, cmd[0]);
 	if (path)
-	{
 		execve(path, cmd, envp);
+	if (cmd[0][0] == '.' || cmd[0][0] == '/')
+	{
 		perror(err_msg);
 		free(path);
 		free(err_msg);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{

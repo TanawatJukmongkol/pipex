@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 21:42:33 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/04/12 20:25:14 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/04/13 11:20:44 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ int	main(int argc, char *argv[], char *envp[])
 	size_t				indx;
 
 	if (argc > 1)
-		proc.heredoc = (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) == 0);
+		proc.heredoc = (ft_strncmp(
+					argv[1], "here_doc", ft_strlen(argv[1])) == 0);
 	if (argc < (5 + proc.heredoc))
 		return (1);
 
