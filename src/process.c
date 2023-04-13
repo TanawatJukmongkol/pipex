@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:00:52 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/04/13 17:11:00 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/04/13 19:50:35 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	exec(char **cmd, char **envp)
 		perror(err_msg);
 		free(path);
 		free(err_msg);
-		exit(EXIT_FAILURE);
+		exit(127);
 	}
 	else
 	{
