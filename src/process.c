@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:00:52 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/04/15 13:10:22 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/04/15 13:28:40 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ pid_t	redirr_fd(char *name, int fd, int mode)
 		close(file);
 		err_msg = ft_strjoin("\033[91mPipeX:\033[0m ", name);
 		ft_putstr_fd(err_msg, 2);
-		if(access(name, R_OK))
+		if (access(name, R_OK))
 			ft_putendl_fd(": Permission denied", 2);
 		else
 			ft_putendl_fd(": No such file or directory", 2);
