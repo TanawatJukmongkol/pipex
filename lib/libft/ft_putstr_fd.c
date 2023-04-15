@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 21:28:00 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/03/08 08:40:19 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/04/15 17:04:11 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,5 @@ void	ft_putstr_fd(char *c, int fd)
 {
 	if (!c || fd < 0)
 		return ;
-	c--;
-	while (*++c)
-		write(fd, c, 1);
+	write(fd, c, ft_strlen(c));
 }
