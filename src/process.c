@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:00:52 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/04/13 19:50:35 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/04/14 11:39:47 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,18 +84,13 @@ void	exec(char **cmd, char **envp)
 	if (path)
 		execve(path, cmd, envp);
 	if (cmd[0][0] == '.' || cmd[0][0] == '/')
-	{
 		perror(err_msg);
-		free(path);
-		free(err_msg);
-		exit(127);
-	}
 	else
 	{
 		ft_putstr_fd(err_msg, 2);
 		ft_putendl_fd(": command not found", 2);
-		free(path);
-		free(err_msg);
-		exit(127);
 	}
+	free(path);
+	free(err_msg);
+	exit(127);
 }

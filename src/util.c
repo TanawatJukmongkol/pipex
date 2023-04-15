@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 13:21:28 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/04/13 05:00:20 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/04/14 04:17:00 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	*get_path(char **envp, char *cmd)
 	size_t	i;
 
 	i = 0;
-	while ( envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
 		i++;
 	if (envp[i])
 	{
