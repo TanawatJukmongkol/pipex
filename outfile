@@ -1,0 +1,12 @@
+Makefile
+PIPEX_TESTER
+a.out
+build
+here_doc
+infile
+lib
+main.c
+outfile
+pipex
+pipex.dSYM
+src

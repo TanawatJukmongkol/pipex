@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:00:52 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/04/13 19:50:35 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/04/15 13:10:22 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,15 @@ pid_t	redirr_fd(char *name, int fd, int mode)
 				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 	else
 		return (-1);
-	if (access(name, F_OK) || file < 0)
+	if (access(name, F_OK | R_OK) || file < 0)
 	{
 		close(file);
 		err_msg = ft_strjoin("\033[91mPipeX:\033[0m ", name);
 		ft_putstr_fd(err_msg, 2);
-		ft_putendl_fd(": No such file or directory", 2);
+		if(access(name, R_OK))
+			ft_putendl_fd(": Permission denied", 2);
+		else
+			ft_putendl_fd(": No such file or directory", 2);
 		free(err_msg);
 		exit(1);
 	}
