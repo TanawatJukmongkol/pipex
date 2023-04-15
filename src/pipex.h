@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 21:41:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/04/13 11:35:03 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/04/15 19:19:36 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,14 @@ void	exec(char **cmd, char **envp);
 // Utils
 size_t	arr2d_len(void **array);
 void	free_2d_arr(void **array);
-char	*get_env(char *env, char **envp);
+char	*get_access_path(char *p, char *cmd);
 char	*get_path(char **env, char *cmd);
 void	close_pipes(t_process *proc, size_t a, size_t b);
+
+// Child process
+void	here_doc(t_process *proc);
+void	infile(t_process *proc);
+void	command(t_process *proc);
+void	outfile(t_process *proc);
 
 #endif

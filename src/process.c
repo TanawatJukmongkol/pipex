@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:00:52 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/04/15 17:25:11 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/04/15 19:26:01 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	wait_process(t_process *proc)
 	{
 		waitpid(proc->fork[indx], &proc->exit_stats[indx], 0);
 		proc->exit_stats[indx] = WEXITSTATUS(proc->exit_stats[indx]);
-		// printf("%lu:%d exit stat: %d\n", proc->indx, proc->fork[indx], proc->exit_stats[indx]);
 		indx++;
 	}
 }
@@ -29,6 +28,8 @@ void	wait_process(t_process *proc)
 void	spawn_process(t_process *proc, void (*fn)(t_process *p))
 {
 	proc->fork[proc->nproc] = fork();
+	if (proc->fork[proc->nproc] < 0)
+		ft_putstr_fd("\033[91mPipeX FATAL:\033[0m: Failed to fork.", 2);
 	if (proc->fork[proc->nproc] == 0)
 		fn(proc);
 	proc->nproc++;
@@ -41,7 +42,8 @@ void	create_pipes(t_process *proc, size_t npipe)
 	indx = 0;
 	while (indx < npipe)
 	{
-		pipe(proc->pipe[indx]);
+		if (pipe(proc->pipe[indx]) < 0)
+			ft_putstr_fd("\033[91mPipeX FATAL:\033[0m: Failed to pipe.", 2);
 		indx++;
 	}
 }
