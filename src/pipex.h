@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 21:41:44 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/04/15 19:19:36 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/04/18 18:17:57 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 //
 typedef struct s_process
 {
-	int		argc;
+	size_t	argc;
 	char	**argv;
 	char	**envp;
 	int		heredoc;

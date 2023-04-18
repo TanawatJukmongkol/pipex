@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 21:42:33 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/04/15 19:08:32 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/04/18 18:43:51 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int	main(int argc, char *argv[], char *envp[])
 	proc.argc = argc;
 	proc.argv = argv;
 	proc.envp = envp;
-	create_pipes(&proc, argc - (4 + proc.heredoc));
+	create_pipes(&proc, argc - 4);
 	spawn_process(&proc, infile);
-	while (indx < (size_t)argc - (5 + proc.heredoc))
+	while (indx < proc.argc - 5)
 	{
 		spawn_process(&proc, command);
 		indx++;

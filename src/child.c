@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 19:05:55 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/04/15 19:25:47 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/04/18 21:00:26 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	infile(t_process *proc)
 {
 	char	**cmd;
 
-	cmd = ft_split(proc->argv[proc->nproc + 2 + proc->heredoc], ' ');
+	cmd = ft_split(proc->argv[proc->nproc + 2], ' ');
 	close_pipes(proc, 0, 1);
 	if (!proc->heredoc)
 	{
@@ -55,7 +55,7 @@ void	command(t_process *proc)
 {
 	char	**cmd;
 
-	cmd = ft_split(proc->argv[proc->nproc + 2 + proc->heredoc], ' ');
+	cmd = ft_split(proc->argv[proc->nproc + 2], ' ');
 	close_pipes(proc, proc->nproc - 1, 2);
 	close(proc->pipe[proc->nproc - 1][1]);
 	dup2(proc->pipe[proc->nproc - 1][0], 0);
@@ -70,11 +70,11 @@ void	outfile(t_process *proc)
 {
 	char	**cmd;
 
-	cmd = ft_split(proc->argv[proc->nproc + 2 + proc->heredoc], ' ');
+	cmd = ft_split(proc->argv[proc->nproc + 2], ' ');
 	close_pipes(proc, proc->nproc - 1, 1);
 	close(proc->pipe[proc->nproc - 1][1]);
 	dup2(proc->pipe[proc->nproc - 1][0], 0);
 	close(proc->pipe[proc->nproc - 1][0]);
-	redirr_fd(proc->argv[proc->nproc + 3 + proc->heredoc], 1, P_WRITE);
+	redirr_fd(proc->argv[proc->nproc + 3], 1, P_WRITE);
 	exec(cmd, proc->envp);
 }
