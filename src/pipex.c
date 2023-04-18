@@ -30,7 +30,7 @@ int	main(int argc, char *argv[], char *envp[])
 	proc.envp = envp;
 	create_pipes(&proc, argc - (4 + proc.heredoc));
 	spawn_process(&proc, infile);
-	while (indx < argc - (5 + proc.heredoc))
+	while (indx < (size_t)argc - (5 + proc.heredoc))
 	{
 		spawn_process(&proc, command);
 		indx++;

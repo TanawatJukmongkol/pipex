@@ -6,7 +6,7 @@
 /*   By: tjukmong <tjukmong@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 22:00:52 by tjukmong          #+#    #+#             */
-/*   Updated: 2023/04/15 19:26:01 by tjukmong         ###   ########.fr       */
+/*   Updated: 2023/04/15 22:27:12 by tjukmong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	spawn_process(t_process *proc, void (*fn)(t_process *p))
 {
 	proc->fork[proc->nproc] = fork();
 	if (proc->fork[proc->nproc] < 0)
-		ft_putstr_fd("\033[91mPipeX FATAL:\033[0m: Failed to fork.", 2);
+		exit(0);
 	if (proc->fork[proc->nproc] == 0)
 		fn(proc);
 	proc->nproc++;
